@@ -9,7 +9,14 @@ import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.SupportMapFragment;
+
 public class AddNoteActivity extends AppCompatActivity {
+
+    SupportMapFragment supportMapFragment;
+    FusedLocationProviderClient fusedLocationProviderClient;
 
     // Widgets
     private EditText noteTitle, noteDate, noteLocation, noteContent;
@@ -21,9 +28,11 @@ public class AddNoteActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_note);
-
         setTitle("Note");
         setContentView(R.layout.activity_add_note);
+
+        supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.google_map);
+        fusedLocationProviderClient = (FusedLocationProviderClient) LocationServices.getFusedLocationProviderClient(this);
 
         // Widget instantiation
         noteTitle = findViewById(R.id.note_title);
@@ -64,6 +73,7 @@ public class AddNoteActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
 
 
 

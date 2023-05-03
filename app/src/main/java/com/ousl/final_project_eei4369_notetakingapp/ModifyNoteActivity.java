@@ -1,19 +1,21 @@
  package com.ousl.final_project_eei4369_notetakingapp;
 
-import androidx.appcompat.app.AppCompatActivity;
+ import android.content.Intent;
+ import android.os.Bundle;
+ import android.view.View;
+ import android.widget.Button;
+ import android.widget.EditText;
+ import android.widget.ImageButton;
+ import android.widget.Toast;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
+ import androidx.appcompat.app.AppCompatActivity;
 
  public class ModifyNoteActivity extends AppCompatActivity {
 
      // Widgets
      private EditText modifyTitle, modifyDate, modifyLocation, modifyContent;
-     private Button updateButton, deleteButton, cancelButton;
+     private Button updateButton, deleteButton;
+     private ImageButton locationButton;
      private long _id;
      private DB_Manager dbManager;
 
@@ -34,7 +36,8 @@ import android.widget.EditText;
 
         updateButton = findViewById(R.id.modify_updateBtn);
         deleteButton = findViewById(R.id.modify_deleteBtn);
-        cancelButton = findViewById(R.id.modify_cancelBtn);
+        locationButton = findViewById(R.id.locationBtn2);
+
 
         Intent intent = getIntent();
         String id = intent.getStringExtra("_id");
@@ -50,6 +53,14 @@ import android.widget.EditText;
         modifyLocation.setText(location);
         modifyContent.setText(content);
 
+        locationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ModifyNoteActivity.this, MapsLocationActivity.class);
+                startActivity(intent);
+            }
+        });
+
         updateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,6 +71,7 @@ import android.widget.EditText;
 
                 dbManager.update(_id, Title, Date, Location, Content);
                 this.returnHome();
+                Toast.makeText(ModifyNoteActivity.this, "Note Updated", Toast.LENGTH_SHORT).show();
 
             }
             private void returnHome(){
