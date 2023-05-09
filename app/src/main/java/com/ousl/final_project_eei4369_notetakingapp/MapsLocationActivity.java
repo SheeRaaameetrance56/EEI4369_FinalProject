@@ -1,22 +1,26 @@
 package com.ousl.final_project_eei4369_notetakingapp;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.widget.EditText;
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.ousl.final_project_eei4369_notetakingapp.databinding.ActivityMapsLocationBinding;
 
 public class MapsLocationActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    private FloatingActionButton currentLocation;
     private ActivityMapsLocationBinding binding;
     public static EditText noteLocation;
+
+    private static final int LOCATION_PERMISSION_CODE = 101;
 
 
     @Override
@@ -24,15 +28,22 @@ public class MapsLocationActivity extends FragmentActivity implements OnMapReady
         super.onCreate(savedInstanceState);
 
         noteLocation = findViewById(R.id.note_location);
-        currentLocation = findViewById(R.id.currentLocationBtn);
+
 
         binding = ActivityMapsLocationBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.google_map);
-        mapFragment.getMapAsync(this);
+
+
+        if(isLocationPermissionGranted()){
+            // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+            SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                    .findFragmentById(R.id.google_map);
+            mapFragment.getMapAsync(this);
+        }
+        else {
+            requestLocationPermission();
+        }
 
 
     }
@@ -50,7 +61,22 @@ public class MapsLocationActivity extends FragmentActivity implements OnMapReady
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
+        //Runtime permissions
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)== PackageManager.PERMISSION_GRANTED){
+            mMap.setMyLocationEnabled(true);
+        }
+    }
 
+    private boolean isLocationPermissionGranted(){
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
 
+    private void requestLocationPermission(){
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_CODE);
     }
 }

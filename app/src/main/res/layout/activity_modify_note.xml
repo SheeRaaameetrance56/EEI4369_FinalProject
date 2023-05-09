@@ -60,6 +60,7 @@
             android:layout_margin="5dp"
             android:layout_marginBottom="16dp"
             android:text="Update"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
@@ -70,6 +71,7 @@
             android:layout_margin="5dp"
             android:layout_marginBottom="16dp"
             android:text="Delete"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/modify_updateBtn"
             app:layout_constraintHorizontal_bias="1.0"
@@ -147,35 +149,35 @@
             app:layout_constraintVertical_bias="0.0">
 
             <ImageButton
-                android:id="@+id/imageButton"
+                android:id="@+id/boldBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/baseline_format_bold_24" />
 
             <ImageButton
-                android:id="@+id/imageButton2"
+                android:id="@+id/italicBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/baseline_format_italic_24" />
 
             <ImageButton
-                android:id="@+id/imageButton3"
+                android:id="@+id/underlineBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/baseline_format_underlined_24" />
 
             <ImageButton
-                android:id="@+id/imageButton4"
+                android:id="@+id/photoBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/baseline_add_a_photo_24" />
 
             <ImageButton
-                android:id="@+id/imageButton5"
+                android:id="@+id/videoBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
