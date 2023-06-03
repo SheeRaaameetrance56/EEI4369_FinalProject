@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private DB_Manager dbManager;
     private ListView listView;
     private TextView profileName;
+    private Button logOut;
     private SimpleCursorAdapter adapter;
     private FloatingActionButton addNoteButton;
     private SensorManager sensorManager;
@@ -43,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     final int[] to = new int[] {R.id.noteId,R.id.noteTitle, R.id.noteDate, R.id.noteLocation, R.id.noteContent};
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
         listView.setEmptyView(findViewById(R.id.empty));
         addNoteButton = findViewById(R.id.noteAddingBtn);
         profileName = findViewById(R.id.textProfile);
+        logOut = findViewById(R.id.btn_logout);
 
         adapter = new SimpleCursorAdapter(this, R.layout.activity_note_view, cursor, from, to, 0);
         adapter.notifyDataSetChanged();
@@ -99,6 +103,14 @@ public class MainActivity extends AppCompatActivity {
 
                 startActivity(modifyIntent);
 
+            }
+        });
+
+        logOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ActivitySignLog.class);
+                startActivity(intent);
             }
         });
 
