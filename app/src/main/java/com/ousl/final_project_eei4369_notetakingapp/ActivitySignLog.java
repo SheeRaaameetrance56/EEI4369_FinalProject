@@ -122,7 +122,7 @@ public class ActivitySignLog extends AppCompatActivity {
                 String password = text_password.getText().toString();
                 Boolean checkEmailPassword = dataBaseHelper.checkEmailPassword(email, password);
                 if(email.equals("")){
-                    error_text_email.setText("*Email is required");
+                    error_text_email.setText("*E-mail is required");
                 }
                 else if(password.equals("")){
                     error_text_password.setText("*Password is required");

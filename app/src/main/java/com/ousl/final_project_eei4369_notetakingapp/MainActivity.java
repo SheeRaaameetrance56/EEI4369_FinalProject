@@ -26,6 +26,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 public class MainActivity extends AppCompatActivity {
     private DB_Manager dbManager;
     private ListView listView;
+    private TextView profileName;
     private SimpleCursorAdapter adapter;
     private FloatingActionButton addNoteButton;
     private SensorManager sensorManager;
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
     final int[] to = new int[] {R.id.noteId,R.id.noteTitle, R.id.noteDate, R.id.noteLocation, R.id.noteContent};
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
         listView = findViewById(R.id.listView);
         listView.setEmptyView(findViewById(R.id.empty));
         addNoteButton = findViewById(R.id.noteAddingBtn);
+        profileName = findViewById(R.id.textProfile);
 
         adapter = new SimpleCursorAdapter(this, R.layout.activity_note_view, cursor, from, to, 0);
         adapter.notifyDataSetChanged();
@@ -61,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
 
         mProximitySensor = new ProximitySensor(this);
 
+        profileName.setText("asdasd");
         //on Click listener for new note
         addNoteButton.setOnClickListener(new View.OnClickListener() {
             @Override
