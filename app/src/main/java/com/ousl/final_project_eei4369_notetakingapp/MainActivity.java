@@ -24,25 +24,22 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
 public class MainActivity extends AppCompatActivity {
-
     private DB_Manager dbManager;
     private ListView listView;
     private SimpleCursorAdapter adapter;
-
     private FloatingActionButton addNoteButton;
-
     private SensorManager sensorManager;
     private ProximitySensor mProximitySensor;
 
     final String[] from = new String[] {
-//            DataBaseHelper._ID,
+            DataBaseHelper.NOTES_ID,
             DataBaseHelper.Title,
             DataBaseHelper.Date,
             DataBaseHelper.Location,
             DataBaseHelper.Content,
     };
 
-    final int[] to = new int[] {R.id.noteTitle, R.id.noteDate, R.id.noteLocation, R.id.noteContent};
+    final int[] to = new int[] {R.id.noteId,R.id.noteTitle, R.id.noteDate, R.id.noteLocation, R.id.noteContent};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,18 +53,15 @@ public class MainActivity extends AppCompatActivity {
 
         listView = findViewById(R.id.listView);
         listView.setEmptyView(findViewById(R.id.empty));
+        addNoteButton = findViewById(R.id.noteAddingBtn);
 
         adapter = new SimpleCursorAdapter(this, R.layout.activity_note_view, cursor, from, to, 0);
-
         adapter.notifyDataSetChanged();
-
         listView.setAdapter(adapter);
-
-        addNoteButton = findViewById(R.id.noteAddingBtn);
 
         mProximitySensor = new ProximitySensor(this);
 
-        //on Click listner for new note
+        //on Click listener for new note
         addNoteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // on Click listner for item view
+        // on Click listener for item view
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -107,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public boolean onCreatOptionsMenu(Menu menu){
+    public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.menu, menu);
         return true;
     }
@@ -142,8 +136,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public class ProximitySensor implements SensorEventListener {
-        private Context mContext;
+    public static class ProximitySensor implements SensorEventListener {
+        private final Context mContext;
         PowerManager.WakeLock mWakeLock;
 
         public ProximitySensor(Context context) {
