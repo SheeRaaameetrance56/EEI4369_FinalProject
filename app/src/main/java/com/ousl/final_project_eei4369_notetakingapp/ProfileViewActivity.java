@@ -43,6 +43,7 @@ public class ProfileViewActivity extends AppCompatActivity {
 //        String email = profileData.getEmail();
         Cursor cursor = DB_Manager.fetchProfile(this);
 
+        // profile view on adapter to profile layout
         adapter = new SimpleCursorAdapter(this, R.layout.profile_layout,cursor,from,to);
         ListView listView = findViewById(R.id.listView);
         listView.setAdapter(adapter);

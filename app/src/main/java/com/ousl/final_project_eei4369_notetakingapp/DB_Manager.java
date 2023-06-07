@@ -65,6 +65,7 @@ public class DB_Manager {
         return cursor;
     }
 
+    // fetch data from sign table
     public static Cursor fetchProfile(Context context) {
         DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
         SQLiteDatabase database = dataBaseHelper.getReadableDatabase();

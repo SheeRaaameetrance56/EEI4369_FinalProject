@@ -121,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    // navigation back pressed
     @Override
     public void onBackPressed() {
         new AlertDialog.Builder(this)
@@ -138,22 +139,23 @@ public class MainActivity extends AppCompatActivity {
                 .show();
     }
 
-//    public boolean onCreateOptionsMenu(Menu menu){
-//        getMenuInflater().inflate(R.menu.menu, menu);
-//        return true;
-//    }
+/*
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item){
+        int id = item.getItemId();
+        if (id == R.id.add_record){
+            Intent add_mem = new Intent(this,AddNoteActivity.class);
+            startActivity(add_mem);
+        }
 
-//    @Override
-//    public boolean onOptionsItemSelected(@NonNull MenuItem item){
-//        int id = item.getItemId();
-//        if (id == R.id.add_record){
-//            Intent add_mem = new Intent(this,AddNoteActivity.class);
-//            startActivity(add_mem);
-//        }
-//
-//
-//        return super.onOptionsItemSelected(item);
-//    }
+
+        return super.onOptionsItemSelected(item);
+    }
+*/
 
 
     // Proximity sensor
