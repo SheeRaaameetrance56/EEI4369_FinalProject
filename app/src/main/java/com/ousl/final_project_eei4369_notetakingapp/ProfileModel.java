@@ -12,14 +12,14 @@ public class ProfileModel {
 
     }
 
-    public ProfileModel(String name, String email, String password, boolean isRemember) {
+    public ProfileModel(String name, String email, String password) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.isRemember = isRemember;
     }
 
-    public ProfileModel(int id, String name, String email, String password,boolean isRemember) {
+    public ProfileModel(int id, String name, String email, String password) {
         this.id = id;
         this.name = name;
         this.email = email;

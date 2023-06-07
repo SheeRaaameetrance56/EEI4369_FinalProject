@@ -27,10 +27,6 @@ public class ActivitySignLog extends AppCompatActivity {
     // Database class
     DataBaseHelper dataBaseHelper;
 
-
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +40,6 @@ public class ActivitySignLog extends AppCompatActivity {
         text_email = findViewById(R.id.email_text);
         text_password = findViewById(R.id.password_text);
 
-        isRemember = findViewById(R.id.is_remember);
 
         error_text_name = findViewById(R.id.errorTextName);
         error_text_email = findViewById(R.id.errorTextEmail);
@@ -64,7 +59,7 @@ public class ActivitySignLog extends AppCompatActivity {
                 String name = text_name.getText().toString();
                 String email = text_email.getText().toString();
                 String password = text_password.getText().toString();
-                boolean isRememberActivated = isRemember.isActivated();
+
 
                 error_text_name.setTextColor(Color.parseColor("#FF0303"));
 
@@ -97,7 +92,7 @@ public class ActivitySignLog extends AppCompatActivity {
                     else {
                         try {
                             // Passing data to the profile model class
-                            ProfileModel profileModel = new ProfileModel(name, email, password, isRememberActivated);
+                            ProfileModel profileModel = new ProfileModel(name, email, password);
                             dataBaseHelper.addProfile(profileModel);
                             Intent intent = new Intent(ActivitySignLog.this, MainActivity.class);
                             startActivity(intent);

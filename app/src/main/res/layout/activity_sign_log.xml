@@ -51,17 +51,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/errorTextName" />
 
-    <CheckBox
-        android:id="@+id/is_remember"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="15dp"
-        android:text="Remember me..!"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.061"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/errorTextPassword" />
-
     <EditText
         android:id="@+id/password_text"
         android:layout_width="match_parent"
@@ -81,14 +70,13 @@
         android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
-        android:layout_marginTop="15dp"
         android:text="Sign In"
         android:textStyle="bold"
         app:cornerRadius="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/btn_login"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/is_remember" />
+        app:layout_constraintTop_toBottomOf="@+id/errorTextPassword" />
 
     <Button
         android:id="@+id/btn_login"
