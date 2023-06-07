@@ -137,9 +137,13 @@ public class ActivitySignLog extends AppCompatActivity {
                 else if(password.equals("")){
                     error_text_password.setText("*Password is required");
                 }
-                else {
+                else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                    error_text_email.setText("*Please enter valid email");
+                }
+                else if (password.length()<8) {
+                    error_text_password.setText("*Password must contain at least 8 characters");
+                } else {
                     if (checkEmailPassword == true) {
-
                         Intent intent = new Intent(ActivitySignLog.this, MainActivity.class);
                         startActivity(intent);
                         finish();

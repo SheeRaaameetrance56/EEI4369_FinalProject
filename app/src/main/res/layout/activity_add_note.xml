@@ -43,7 +43,7 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="413dp"
+        android:layout_width="match_parent"
         android:layout_height="620dp"
         android:padding="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
