@@ -5,7 +5,7 @@ public class ProfileModel {
     public String name;
     public String email;
     public String password;
-    public boolean isRemember;
+
 
     // constructors
     public ProfileModel() {
@@ -16,7 +16,7 @@ public class ProfileModel {
         this.name = name;
         this.email = email;
         this.password = password;
-        this.isRemember = isRemember;
+
     }
 
     public ProfileModel(int id, String name, String email, String password) {
@@ -24,7 +24,7 @@ public class ProfileModel {
         this.name = name;
         this.email = email;
         this.password = password;
-        this.isRemember = isRemember;
+
     }
 
     // Getters and setters
@@ -60,11 +60,4 @@ public class ProfileModel {
         this.password = password;
     }
 
-    public boolean getIsRemember() {
-        return isRemember;
-    }
-
-    public void setRemember(boolean remember) {
-        isRemember = remember;
-    }
 }

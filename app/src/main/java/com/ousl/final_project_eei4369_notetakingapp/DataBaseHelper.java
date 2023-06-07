@@ -32,7 +32,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String NAME = "name";
     public static final String EMAIL = "email";
     public static final String PASSWORD = "password";
-    public static final String IS_REMEMBER = "isRemember";
 
 
     //Note Table creating query
@@ -49,13 +48,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             SIGN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
             NAME + " TEXT," +
             EMAIL + " TEXT," +
-            PASSWORD + " TEXT," +
-            IS_REMEMBER + " BOOLEAN )";
+            PASSWORD + " TEXT)";
 
 
     // Constructor
     public DataBaseHelper(@Nullable Context context) {
-        super(context, DB_Name, null, 10);
+        super(context, DB_Name, null, 11);
     }
 
 
@@ -82,7 +80,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         cv.put(NAME, profileModel.getName());
         cv.put(EMAIL, profileModel.getEmail());
         cv.put(PASSWORD, profileModel.getPassword());
-        cv.put(IS_REMEMBER, profileModel.getIsRemember());
+
 
         db.insert(TABLE_SIGN, null, cv);
         db.close();
