@@ -1,13 +1,19 @@
 package com.ousl.final_project_eei4369_notetakingapp;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Typeface;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Looper;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.StyleSpan;
+import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -16,6 +22,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -57,7 +64,7 @@ public class AddNoteActivity extends AppCompatActivity {
     // Widgets
     private EditText noteTitle, noteDate, noteLocation, noteContent;
     private Button proceedButton;
-    private ImageButton locationButton, photoButton, videoButton;
+    private ImageButton locationButton, photoButton, videoButton, boldButton, underlineButton, italicButton;
     private DB_Manager dbManager;
 
     // on create method---------------------------------------------------------------
@@ -86,6 +93,9 @@ public class AddNoteActivity extends AppCompatActivity {
         locationButton = findViewById(R.id.locationBtn);
         photoButton = findViewById(R.id.photoBtn);
         videoButton = findViewById(R.id.videoBtn);
+        boldButton = findViewById(R.id.boldBtn);
+        underlineButton = findViewById(R.id.underlineBtn);
+        italicButton = findViewById(R.id.italicBtn);
 
         // data base initialization
         dbManager = new DB_Manager(this);
@@ -121,8 +131,6 @@ public class AddNoteActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-
-
                 Intent intent = new Intent(AddNoteActivity.this, ImageViewActivity.class);
                 startActivity(intent);
             }
@@ -136,12 +144,66 @@ public class AddNoteActivity extends AppCompatActivity {
             }
         });
 
+        boldButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Spannable spannableText = new SpannableStringBuilder(noteContent.getText());
+                spannableText.setSpan(new StyleSpan(Typeface.BOLD),
+                        noteContent.getSelectionStart(),
+                        noteContent.getSelectionEnd(),
+                        0);
+
+                noteContent.setText(spannableText);
+            }
+        });
+
+        underlineButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Spannable spannableText = new SpannableStringBuilder(noteContent.getText());
+                spannableText.setSpan(new UnderlineSpan(),
+                        noteContent.getSelectionStart(),
+                        noteContent.getSelectionEnd(),
+                        0);
+                noteContent.setText(spannableText);
+            }
+        });
+
+        italicButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Spannable spannableText = new SpannableStringBuilder(noteContent.getText());
+                spannableText.setSpan(new StyleSpan(Typeface.ITALIC),
+                        noteContent.getSelectionStart(),
+                        noteContent.getSelectionEnd(),
+                        0);
+                noteContent.setText(spannableText);
+            }
+        });
+
 //        noteLocation.setText("Location");
 
         // Calling permission
         checkLocationPermission();
-
+        // fused location init method
         init();
+    }
+
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+                .setTitle("Exiting from adding note ?")
+                .setMessage("The details won't save when you go back.")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+
+                })
+                .setNegativeButton("No", null)
+                .show();
     }
 
     // ---------------Location permission-----------------

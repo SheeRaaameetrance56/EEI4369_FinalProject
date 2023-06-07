@@ -10,8 +10,6 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.PowerManager;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -19,7 +17,6 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -141,22 +138,22 @@ public class MainActivity extends AppCompatActivity {
                 .show();
     }
 
-    public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.menu, menu);
-        return true;
-    }
+//    public boolean onCreateOptionsMenu(Menu menu){
+//        getMenuInflater().inflate(R.menu.menu, menu);
+//        return true;
+//    }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item){
-        int id = item.getItemId();
-        if (id == R.id.add_record){
-            Intent add_mem = new Intent(this,AddNoteActivity.class);
-            startActivity(add_mem);
-        }
-
-
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(@NonNull MenuItem item){
+//        int id = item.getItemId();
+//        if (id == R.id.add_record){
+//            Intent add_mem = new Intent(this,AddNoteActivity.class);
+//            startActivity(add_mem);
+//        }
+//
+//
+//        return super.onOptionsItemSelected(item);
+//    }
 
 
     // Proximity sensor

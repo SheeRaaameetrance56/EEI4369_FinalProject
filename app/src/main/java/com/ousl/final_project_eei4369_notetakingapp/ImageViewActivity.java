@@ -1,6 +1,8 @@
 package com.ousl.final_project_eei4369_notetakingapp;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -38,7 +42,12 @@ public class ImageViewActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(camera, requestCamera);
+                if (ContextCompat.checkSelfPermission(ImageViewActivity.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED){
+                    startActivityForResult(camera, requestCamera);
+                }else {
+                    // Request camera permission
+                    ActivityCompat.requestPermissions(ImageViewActivity.this, new String[]{Manifest.permission.CAMERA}, requestCamera);
+                }
             }
         });
 
@@ -49,11 +58,15 @@ public class ImageViewActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode,Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == requestCamera){
-            Bitmap imageBitmap = (Bitmap) data.getExtras().get("data");
-            imageView.setImageBitmap(imageBitmap);
+        try{
+            if (requestCode == requestCamera){
+                Bitmap imageBitmap = (Bitmap) data.getExtras().get("data");
+                imageView.setImageBitmap(imageBitmap);
 
-            saveImageToGallery(imageBitmap);
+                saveImageToGallery(imageBitmap);
+            }
+        }catch (Exception e){
+
         }
     }
 
