@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -22,6 +23,8 @@ public class ActivitySignLog extends AppCompatActivity {
     EditText text_name, text_email, text_password;
     CheckBox isRemember;
     TextView error_text_name, error_text_email, error_text_password;
+
+    // Database class
     DataBaseHelper dataBaseHelper;
 
 
@@ -61,10 +64,11 @@ public class ActivitySignLog extends AppCompatActivity {
                 String name = text_name.getText().toString();
                 String email = text_email.getText().toString();
                 String password = text_password.getText().toString();
-                error_text_name.setTextColor(Color.parseColor("#FF0303"));
-
                 boolean isRememberActivated = isRemember.isActivated();
 
+                error_text_name.setTextColor(Color.parseColor("#FF0303"));
+
+                // Check validation
                 if(name.equals("") && email.equals("") && password.equals("")){
                     error_text_name.setText("*Name is required");
                     error_text_email.setText("*E-mail is required");
@@ -80,6 +84,9 @@ public class ActivitySignLog extends AppCompatActivity {
                 else if (password.equals("")) {
                     error_text_password.setText("*Password is required");
                 }
+                else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                    error_text_email.setText("*Please enter valid email");
+                }
                 else if (password.length()<8) {
                     error_text_password.setText("*Password must contain at least 8 characters");
                 } else {
@@ -89,6 +96,7 @@ public class ActivitySignLog extends AppCompatActivity {
                     }
                     else {
                         try {
+                            // Passing data to the profile model class
                             ProfileModel profileModel = new ProfileModel(name, email, password, isRememberActivated);
                             dataBaseHelper.addProfile(profileModel);
                             Intent intent = new Intent(ActivitySignLog.this, MainActivity.class);
@@ -121,6 +129,8 @@ public class ActivitySignLog extends AppCompatActivity {
                 String email = text_email.getText().toString();
                 String password = text_password.getText().toString();
                 Boolean checkEmailPassword = dataBaseHelper.checkEmailPassword(email, password);
+
+                // check validations
                 if(email.equals("")){
                     error_text_email.setText("*E-mail is required");
                 }
@@ -129,11 +139,12 @@ public class ActivitySignLog extends AppCompatActivity {
                 }
                 else {
                     if (checkEmailPassword == true) {
+
                         Intent intent = new Intent(ActivitySignLog.this, MainActivity.class);
                         startActivity(intent);
                         finish();
                     } else {
-                        Toast.makeText(ActivitySignLog.this, "The Email or Password wrong", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ActivitySignLog.this, "The Email or Password Doesn't Exist", Toast.LENGTH_SHORT).show();
                     }
                 }
             }

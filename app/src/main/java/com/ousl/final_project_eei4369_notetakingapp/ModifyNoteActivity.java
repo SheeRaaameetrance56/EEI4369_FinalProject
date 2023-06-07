@@ -1,5 +1,6 @@
  package com.ousl.final_project_eei4369_notetakingapp;
 
+ import android.content.DialogInterface;
  import android.content.Intent;
  import android.os.Bundle;
  import android.view.View;
@@ -8,6 +9,7 @@
  import android.widget.ImageButton;
  import android.widget.Toast;
 
+ import androidx.appcompat.app.AlertDialog;
  import androidx.appcompat.app.AppCompatActivity;
 
  public class ModifyNoteActivity extends AppCompatActivity {
@@ -83,18 +85,23 @@
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dbManager.delete(_id);
-                this.returnHome();
-            }
-            private void returnHome(){
-                Intent home_intent = new Intent(getApplicationContext(), MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(home_intent);
+                new AlertDialog.Builder(ModifyNoteActivity.this)
+                        .setTitle("Deleting note")
+                        .setMessage("Are you sure you want to delete the note?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener()
+                        {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dbManager.delete(_id);
+                                Intent home_intent = new Intent(getApplicationContext(), MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(home_intent);
+                            }
+
+                        })
+                        .setNegativeButton("No", null)
+                        .show();
 
             }
         });
-
-
     }
-
-
 }

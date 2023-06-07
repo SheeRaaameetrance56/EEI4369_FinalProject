@@ -1,6 +1,7 @@
 package com.ousl.final_project_eei4369_notetakingapp;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.hardware.Sensor;
@@ -19,21 +20,32 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
 public class MainActivity extends AppCompatActivity {
+
+    // class database manager (DB_Manager)
     private DB_Manager dbManager;
+
+
+    // components
     private ListView listView;
     private TextView profileName;
-    private Button logOut;
-    private SimpleCursorAdapter adapter;
+    private Button profileBtn;
     private FloatingActionButton addNoteButton;
+
+    // cursor adapter
+    private SimpleCursorAdapter adapter;
+
+    // Sensor managers
     private SensorManager sensorManager;
     private ProximitySensor mProximitySensor;
 
+    // list model of fetching notes data
     final String[] from = new String[] {
             DataBaseHelper.NOTES_ID,
             DataBaseHelper.Title,
@@ -42,9 +54,8 @@ public class MainActivity extends AppCompatActivity {
             DataBaseHelper.Content,
     };
 
+    // list of set data fetched from database
     final int[] to = new int[] {R.id.noteId,R.id.noteTitle, R.id.noteDate, R.id.noteLocation, R.id.noteContent};
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,21 +65,18 @@ public class MainActivity extends AppCompatActivity {
         dbManager = new DB_Manager(this);
         dbManager.open();
 
-        Cursor cursor = dbManager.fetch();
-
         listView = findViewById(R.id.listView);
         listView.setEmptyView(findViewById(R.id.empty));
         addNoteButton = findViewById(R.id.noteAddingBtn);
-        profileName = findViewById(R.id.textProfile);
-        logOut = findViewById(R.id.btn_logout);
+        profileBtn = findViewById(R.id.btn_profile);
 
+        Cursor cursor = dbManager.fetch();
         adapter = new SimpleCursorAdapter(this, R.layout.activity_note_view, cursor, from, to, 0);
         adapter.notifyDataSetChanged();
         listView.setAdapter(adapter);
 
         mProximitySensor = new ProximitySensor(this);
 
-        profileName.setText("asdasd");
         //on Click listener for new note
         addNoteButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,16 +114,32 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        logOut.setOnClickListener(new View.OnClickListener() {
+        profileBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, ActivitySignLog.class);
+                Intent intent = new Intent(MainActivity.this, ProfileViewActivity.class);
                 startActivity(intent);
             }
         });
 
     }
 
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+                .setTitle("Exiting from app")
+                .setMessage("Are you sure you want to Exit?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+
+                })
+                .setNegativeButton("No", null)
+                .show();
+    }
 
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.menu, menu);

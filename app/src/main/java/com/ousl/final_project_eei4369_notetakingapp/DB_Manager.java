@@ -16,6 +16,7 @@ public class DB_Manager {
         context = c;
     }
 
+    // Open Database
     public DB_Manager open() throws SQLException {
         dbHelper = new DataBaseHelper(context);
         database = dbHelper.getWritableDatabase();
@@ -26,6 +27,7 @@ public class DB_Manager {
         dbHelper.close();
     }
 
+    //Data inserting to the notes table
     public void insert(String title, String date, String location, String content){
         ContentValues contentValues = new ContentValues();
         contentValues.put(DataBaseHelper.Title, title);
@@ -37,6 +39,7 @@ public class DB_Manager {
 
     }
 
+    // fetch data from notes table
     public Cursor fetch(){
         String[] columns = new String[] {
             DataBaseHelper.NOTES_ID,
@@ -62,6 +65,36 @@ public class DB_Manager {
         return cursor;
     }
 
+    public static Cursor fetchProfile(Context context) {
+        DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
+        SQLiteDatabase database = dataBaseHelper.getReadableDatabase();
+
+        String[] columns = new String[]{
+                DataBaseHelper.SIGN_ID,
+                DataBaseHelper.NAME,
+                DataBaseHelper.EMAIL
+        };
+
+        Cursor cursor = database.query(
+                DataBaseHelper.TABLE_SIGN,
+                columns,
+                null,
+                null,
+                null,
+                null,
+                null
+        );
+
+        if (cursor != null) {
+            cursor.moveToFirst();
+        }
+        return cursor;
+    }
+
+
+
+
+    // Update data from note table
     public int update(long _id, String title, String date, String location, String content){
         ContentValues contentValues = new ContentValues();
         contentValues.put(DataBaseHelper.Title, title);
@@ -73,6 +106,7 @@ public class DB_Manager {
         return updateActivity;
     }
 
+    // delete data from notes table
     public void delete(long _id){
         database.delete(DataBaseHelper.TABLE_NOTES, DataBaseHelper.NOTES_ID + "=" + _id, null);
     }

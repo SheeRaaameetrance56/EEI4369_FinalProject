@@ -24,11 +24,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String Location = "location";
     public static final String Content = "content";
 
-    // sign table
+    // sign table name
     public static final String TABLE_SIGN = "login_data";
 
     // sign table columns
-    public static final String SIGN_ID = "sign_id";
+    public static final String SIGN_ID = "_id";
     public static final String NAME = "name";
     public static final String EMAIL = "email";
     public static final String PASSWORD = "password";
@@ -55,7 +55,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     // Constructor
     public DataBaseHelper(@Nullable Context context) {
-        super(context, DB_Name, null, 8);
+        super(context, DB_Name, null, 10);
     }
 
 
@@ -74,6 +74,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    // Data entering to the sign_table method
     public void addProfile(ProfileModel profileModel){
         SQLiteDatabase db = getWritableDatabase();
 
@@ -87,6 +88,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    // method returns true if email exists
     public boolean checkEmail(String email){
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(" SELECT * FROM " + TABLE_SIGN + " WHERE email = ?", new String[]{email});
@@ -98,6 +100,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    // method returns true if email and password exist
     public boolean checkEmailPassword(String email, String password){
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(" SELECT * FROM " + TABLE_SIGN + " WHERE email = ? AND password = ?", new String[]{email, password});
@@ -108,5 +111,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             return false;
         }
     }
+
+//    public Cursor fetchProfile(String email) {
+//        SQLiteDatabase database = getReadableDatabase();
+//        Cursor cursor = database.rawQuery("SELECT * FROM " + TABLE_SIGN + " WHERE email = ?", new String[]{email});
+//        return cursor;
+//    }
 
 }

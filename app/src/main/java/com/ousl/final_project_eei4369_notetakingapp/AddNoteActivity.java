@@ -8,7 +8,6 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Looper;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -43,6 +42,7 @@ import static android.content.ContentValues.TAG;
 
 public class AddNoteActivity extends AppCompatActivity {
 
+    // Map fragments and location
     SupportMapFragment supportMapFragment;
     private FusedLocationProviderClient fusedLocationProviderClient;
     private LocationCallback locationCallback;
@@ -54,15 +54,13 @@ public class AddNoteActivity extends AppCompatActivity {
     String fetched_address = "";
     String fetched_admin = "";
 
-
-
     // Widgets
     private EditText noteTitle, noteDate, noteLocation, noteContent;
     private Button proceedButton;
     private ImageButton locationButton, photoButton, videoButton;
     private DB_Manager dbManager;
 
-    // -----------------------------------on create method----------------------------------
+    // on create method---------------------------------------------------------------
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,7 +75,7 @@ public class AddNoteActivity extends AppCompatActivity {
         // Widget instantiation
         noteTitle = findViewById(R.id.note_title);
         noteDate = findViewById(R.id.note_date);
-        // Set date
+            // Set date
         String date = new SimpleDateFormat("yyyy.MM.dd").format(new Date());
         noteDate.setText(date);
 
@@ -85,7 +83,6 @@ public class AddNoteActivity extends AppCompatActivity {
         noteContent = findViewById(R.id.note_content);
 
         proceedButton = findViewById(R.id.proceedBtn);
-//        cancelButton = findViewById(R.id.cancelBtn);
         locationButton = findViewById(R.id.locationBtn);
         photoButton = findViewById(R.id.photoBtn);
         videoButton = findViewById(R.id.videoBtn);
@@ -93,8 +90,6 @@ public class AddNoteActivity extends AppCompatActivity {
         // data base initialization
         dbManager = new DB_Manager(this);
         dbManager.open();
-
-//        proceedButton.setOnClickListener(this);
 
         // proceed button
         proceedButton.setOnClickListener(new View.OnClickListener() {
@@ -123,9 +118,12 @@ public class AddNoteActivity extends AppCompatActivity {
         });
 
         photoButton.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+
+                Intent intent = new Intent(AddNoteActivity.this, ImageViewActivity.class);
                 startActivity(intent);
             }
         });
@@ -133,7 +131,7 @@ public class AddNoteActivity extends AppCompatActivity {
         videoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+                Intent intent = new Intent(AddNoteActivity.this, VideoViewActivity.class);
                 startActivity(intent);
             }
         });
@@ -202,7 +200,6 @@ public class AddNoteActivity extends AppCompatActivity {
 
         String s_lat = String.format(Locale.ROOT,"%.6f", lastLocation.getLatitude());
         String s_long = String.format(Locale.ROOT,"%.6f", lastLocation.getLongitude());
-//        String s_alt = String.format(Locale.ROOT,"%.6f", lastLocation.getAltitude());
 
         d_lat = lastLocation.getLatitude();
         d_long = lastLocation.getLongitude();
