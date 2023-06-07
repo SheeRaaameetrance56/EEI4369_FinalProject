@@ -85,6 +85,7 @@ public class VideoViewActivity extends AppCompatActivity {
             }
         });
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -92,6 +93,8 @@ public class VideoViewActivity extends AppCompatActivity {
         if (requestCode == requestCamera && resultCode == RESULT_OK) {
             // Video captured successfully, save the video URI to the desired directory
             if (videoUri != null) {
+                videoView.setVideoURI(videoUri);
+                videoView.start();
                 File destinationFile = new File("YOUR_DESTINATION_DIRECTORY_PATH", "YOUR_VIDEO_NAME.mp4");
 
                 try {
