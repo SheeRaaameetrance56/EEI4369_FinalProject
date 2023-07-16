@@ -46,7 +46,6 @@ public class ActivitySignLog extends AppCompatActivity {
         error_text_password = findViewById(R.id.errorTextPassword);
 
         error_text_name.setTextColor(Color.parseColor("#008000"));
-        error_text_name.setText("*Name doesn't required for login");
         dataBaseHelper = new DataBaseHelper(this);
 
 
@@ -61,30 +60,25 @@ public class ActivitySignLog extends AppCompatActivity {
                 String password = text_password.getText().toString();
 
 
-                error_text_name.setTextColor(Color.parseColor("#FF0303"));
-
                 // Check validation
-                if(name.equals("") && email.equals("") && password.equals("")){
+                if (name.equals("") && email.equals("") && password.equals("")) {
                     error_text_name.setText("*Name is required");
                     error_text_email.setText("*E-mail is required");
                     error_text_password.setText("*Password is required");
                     Toast.makeText(ActivitySignLog.this, "Enter all fields", Toast.LENGTH_SHORT).show();
-                }
-                else if (name.equals("")) {
+                } else if (name.equals("")) {
                     error_text_name.setText("*Name is required");
-                }
-                else if (email.equals("")) {
+                } else if (email.equals("")) {
                     error_text_email.setText("*E-mail is required");
-                }
-                else if (password.equals("")) {
+                } else if (password.equals("")) {
                     error_text_password.setText("*Password is required");
-                }
-                else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                     error_text_email.setText("*Please enter valid email");
                 }
                 else if (password.length()<8) {
                     error_text_password.setText("*Password must contain at least 8 characters");
-                } else {
+            }
+                 else {
                     boolean checkEmail = dataBaseHelper.checkEmail(email);
                     if(checkEmail == true) {
                         error_text_email.setText("*E-mail is currently exist");
